@@ -18,7 +18,8 @@ const AddPostForm = () => {
   const onContentChanged = (e) => setContent(e.target.value);
   const onAuthorChanged = (e) => setUserId(e.target.value);
 
-  const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+  const canSave =
+    [title, content, userId].every(Boolean) && addRequestStatus === "idle";
 
   const onSavePostClicked = () => {
     if (canSave) {
@@ -30,7 +31,7 @@ const AddPostForm = () => {
         setContent("");
         setUserId("");
       } catch (err) {
-        console.log("Failed to add post", err);
+        console.error("Failed to save the post", err);
       } finally {
         setAddRequestStatus("idle");
       }
